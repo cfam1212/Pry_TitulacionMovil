@@ -1,0 +1,93 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage 
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="Pry_TitulacionMovil.Views.LoginPage"
+    BindingContext="{Binding Main, Source={StaticResource Locator}}"
+    Title="Login">
+    <ContentPage.Content>
+        <ScrollView
+            BindingContext="{Binding Login}">
+            <StackLayout
+                Padding="10,20,10,5">
+                <Label                
+                    FontSize="Large"
+                    FontAttributes="Bold"
+                    HorizontalOptions="Center"
+                    Text="Bienvenidos al Sistemas" >
+                </Label>
+                <Image
+                    Source="logo"
+                    WidthRequest="150">
+                </Image>
+                <Grid
+                Margin="0,20">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                        <ColumnDefinition Width="2*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Label
+                        Grid.Row="0"
+                        Grid.Column="0"
+                        Text="Usuario:"
+                        VerticalOptions="Center">
+                    </Label>
+                    <Entry
+                        Grid.Row="0"
+                        Grid.Column="1"
+                        Text="{Binding UserName, Mode=TwoWay}"
+                        Placeholder="Ingrese Usuario:">
+                    </Entry>
+                    <Label
+                        Grid.Row="1"
+                        Grid.Column="0"
+                        Text="Password:"
+                        VerticalOptions="Center">
+                    </Label>
+                    <Entry
+                        Grid.Row="1"
+                        Grid.Column="1"
+                        IsPassword="True"
+                        Text="{Binding Password, Mode=TwoWay}"
+                        Placeholder="Ingrese Password">
+                    </Entry>
+                </Grid>
+                <StackLayout
+                Orientation="Horizontal">
+                    <Label
+                        HorizontalOptions="StartAndExpand"
+                        Text="Recordarme en este dispisitivo"
+                        VerticalOptions="Center">
+                    </Label>
+                    <Switch
+                        IsToggled="{Binding IsRemember, Mode=TwoWay}"
+                        HorizontalOptions="End">
+                    </Switch>
+                </StackLayout>
+                <ActivityIndicator
+                    IsRunning="{Binding IsRunning, Mode=TwoWay}">
+                </ActivityIndicator>
+                <StackLayout
+                Margin="40,0">
+                    <Button                
+                        BackgroundColor="Navy"
+                        CornerRadius="23"
+                        Command="{Binding LoginCommand}"
+                        HeightRequest="46"
+                        IsEnabled="{Binding IsEnabled,Mode=TwoWay}"
+                        TextColor="White"
+                        Text="Login">
+                    </Button>
+                    <Button                
+                        BackgroundColor="#2753AE"
+                        CornerRadius="23"
+                        Command="{Binding CloseCommand}"
+                        HeightRequest="46"
+                        TextColor="White"
+                        Text="Cerrar">
+                    </Button>
+                </StackLayout>
+            </StackLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>
