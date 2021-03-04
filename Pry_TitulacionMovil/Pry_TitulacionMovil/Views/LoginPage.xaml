@@ -17,7 +17,7 @@
                     Text="Bienvenidos al Sistemas" >
                 </Label>
                 <Image
-                    Source="logo"
+                    Source="AppLogo"
                     WidthRequest="150">
                 </Image>
                 <Grid
@@ -70,7 +70,7 @@
                 <StackLayout
                 Margin="40,0">
                     <Button                
-                        BackgroundColor="Navy"
+                        BackgroundColor="Green"
                         CornerRadius="23"
                         Command="{Binding LoginCommand}"
                         HeightRequest="46"
@@ -79,7 +79,7 @@
                         Text="Login">
                     </Button>
                     <Button                
-                        BackgroundColor="#2753AE"
+                        BackgroundColor="#7C8181"
                         CornerRadius="23"
                         Command="{Binding CloseCommand}"
                         HeightRequest="46"

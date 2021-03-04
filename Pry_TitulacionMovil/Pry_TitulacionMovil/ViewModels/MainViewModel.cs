@@ -28,6 +28,7 @@
         #region ViewsModels
         public LoginViewModel Login { get; set; }
         public OrdersViewModel Orders { get; set; }
+        public ClientesViewModel CliOrder { get; set; }
         #endregion
 
         #region Singleton

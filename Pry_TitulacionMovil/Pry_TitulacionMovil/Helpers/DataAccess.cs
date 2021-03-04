@@ -41,7 +41,6 @@
         } 
         #endregion
 
-
         #region Metodos
         public List<Orden> GetOrdenesTrabajo()
         {

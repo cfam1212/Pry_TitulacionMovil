@@ -4,7 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     BindingContext="{Binding Main, Source={StaticResource Locator}}"
     x:Class="Pry_TitulacionMovil.Views.OrdersPage"
-    Title="Ordenes de Trabajo">
+    Title="Ordenes Nuevas">
     <ContentPage.Content>
         <StackLayout
             Padding="5"
@@ -52,7 +52,7 @@
                                         <Label
                                             Grid.Row="0"
                                             Grid.Column="1"
-                                            Text="{Binding NumeroOt}">
+                                            Text="{Binding IdOrden}">
                                         </Label>
                                         <Label
                                             Grid.Row="1"

@@ -12,7 +12,6 @@
                 return model;
             }
         }
-
         public void Update<T>(T model)
         {
             using (var da = new DataAccess())

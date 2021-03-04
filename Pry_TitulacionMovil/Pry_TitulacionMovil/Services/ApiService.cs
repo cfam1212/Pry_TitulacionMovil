@@ -79,51 +79,49 @@
             }
         }
 
-        //public async Task<Response> GetListByOperario<T>(
-        //    string urlBase,
-        //    string api,
-        //    string controller,
-        //    int operario,
-        //    int emprcodigo)
-        //{
-        //    try
-        //    {
-        //        var client = new HttpClient();
-        //        client.BaseAddress = new Uri(urlBase);
-        //        var url = string.Format("{0}/{1}/{2}/{3}",
-        //            api,
-        //            controller,
-        //            operario,
-        //            emprcodigo);
-        //        var response = await client.GetAsync(url);
-        //        var result = await response.Content.ReadAsStringAsync();
+        public async Task<Response> GetListPorTecnico<T>(
+            string urlBase,
+            string api,
+            string controller,
+            int tecnico)
+        {
+            try
+            {
+                var client = new HttpClient();
+                client.BaseAddress = new Uri(urlBase);
+                var url = string.Format("{0}/{1}/{2}",
+                    api,
+                    controller,
+                    tecnico);
+                var response = await client.GetAsync(url);
+                var result = await response.Content.ReadAsStringAsync();
 
-        //        if (!response.IsSuccessStatusCode)
-        //        {
-        //            return new Response
-        //            {
-        //                IsSuccess = false,
-        //                Message = result,
-        //            };
-        //        }
+                if (!response.IsSuccessStatusCode)
+                {
+                    return new Response
+                    {
+                        IsSuccess = false,
+                        Message = result,
+                    };
+                }
 
-        //        var list = JsonConvert.DeserializeObject<List<T>>(result);
-        //        return new Response
-        //        {
-        //            IsSuccess = true,
-        //            Message = Languages.Accept,
-        //            Result = list,
-        //        };
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return new Response
-        //        {
-        //            IsSuccess = false,
-        //            Message = ex.Message,
-        //        };
-        //    }
-        //}
+                var list = JsonConvert.DeserializeObject<List<T>>(result);
+                return new Response
+                {
+                    IsSuccess = true,
+                    Message = "Lista Correcta",
+                    Result = list,
+                };
+            }
+            catch (Exception ex)
+            {
+                return new Response
+                {
+                    IsSuccess = false,
+                    Message = ex.Message,
+                };
+            }
+        }
 
         //public async Task<Response> GetEnterpriseParameter<T>(
         //    string urlBase,

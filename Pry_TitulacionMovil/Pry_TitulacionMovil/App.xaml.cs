@@ -6,6 +6,10 @@
     using Views;
     public partial class App : Application
     {
+        #region Propiedades
+        public static NavigationPage Navigator { get; internal set; }
+        #endregion
+
         #region Constructor
         public App()
         {
