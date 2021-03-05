@@ -1,0 +1,110 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage 
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"    
+    x:Class="Pry_TitulacionMovil.Views.EquiposPage"
+    BindingContext="{Binding Main,Source={StaticResource Locator}}"
+    IconImageSource="ic_build">
+    <ContentPage.Content>
+        <ScrollView
+            BindingContext="{Binding Cliente}">
+            <StackLayout            
+                Padding="5">
+                <Grid
+                    Margin="10,0"
+                    VerticalOptions="CenterAndExpand">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="2*"/>
+                    </Grid.ColumnDefinitions>
+                    <Label
+                        Grid.Row="0"
+                        Grid.Column="0"
+                        TextColor="Navy"
+                        VerticalOptions="Center"
+                        Text="Equipo:">
+                    </Label>
+                    <Label
+                        Grid.Row="0"
+                        Grid.Column="1"
+                        TextColor="Navy"
+                        VerticalOptions="Center"
+                        Text="{Binding Cliente.Equipo}">
+                    </Label>                    
+                    <Label
+                        Grid.Row="1"
+                        Grid.Column="0"
+                        TextColor="Navy"
+                        VerticalOptions="Center"
+                        Text="Marca:">
+                    </Label>
+                    <StackLayout
+                        Grid.Row="1"
+                        Grid.Column="1">
+                        <Picker
+                            x:Name="PickerMarca"
+                            Title="Seleccione Marca"
+                            ItemsSource="{Binding Marcas}"
+                            ItemDisplayBinding="{Binding NombreParametro}"
+                            SelectedIndex="{Binding MarcaIndex}">
+                        </Picker>
+                    </StackLayout>                    
+                    <Label
+                        Grid.Row="2"
+                        Grid.Column="0"
+                        TextColor="Navy"
+                        VerticalOptions="Center"
+                        Text="Modelo:">
+                    </Label>
+                    <StackLayout
+                        Grid.Row="2"
+                        Grid.Column="1">
+                        <Picker
+                            x:Name="PickerModel"
+                            Title="Seleccione Modelo"
+                            ItemsSource="{Binding Modelos}"
+                            ItemDisplayBinding="{Binding NombreParametro}"
+                            SelectedIndex="{Binding ModeloIndex}">
+                        </Picker>
+                    </StackLayout>
+                    <Label
+                        Grid.Row="3"
+                        Grid.Column="0"
+                        TextColor="Navy"
+                        VerticalOptions="Center"
+                        Text="Voltaje:">
+                    </Label>
+                    <Entry
+                        Grid.Row="3"
+                        Grid.Column="1"
+                        Text="{Binding Cliente.Voltaje, Mode=TwoWay}">
+                    </Entry>
+                    <Label
+                        Grid.Row="4"
+                        Grid.Column="0"
+                        TextColor="Navy"
+                        VerticalOptions="Center"
+                        Text="Amperaje:">
+                    </Label>
+                    <Entry
+                        Grid.Row="4"
+                        Grid.Column="1"
+                        Text="{Binding Cliente.Amperaje, Mode=TwoWay}">
+                    </Entry>
+                    <Label
+                        Grid.Row="5"
+                        Grid.Column="0"
+                        TextColor="Navy"
+                        VerticalOptions="Center"
+                        Text="Presion:">
+                    </Label>
+                    <Entry
+                        Grid.Row="5"
+                        Grid.Column="1"
+                        Text="{Binding Cliente.Presion, Mode=TwoWay}">
+                    </Entry>
+                </Grid>
+            </StackLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

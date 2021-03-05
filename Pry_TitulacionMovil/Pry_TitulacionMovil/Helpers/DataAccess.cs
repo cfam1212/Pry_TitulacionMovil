@@ -21,6 +21,8 @@
 
             connection.CreateTable<UserLocal>();
             connection.CreateTable<Orden>();
+            connection.CreateTable<Marca>();
+            connection.CreateTable<Modelo>();
         }
         #endregion
 
@@ -45,6 +47,22 @@
         public List<Orden> GetOrdenesTrabajo()
         {
             var consulta = from datos in connection.Table<Orden>()
+                           select datos;
+
+            return consulta.ToList();
+        }
+
+        public List<Marca> GetMarcas()
+        {
+            var consulta = from datos in connection.Table<Marca>()
+                           select datos;
+
+            return consulta.ToList();
+        }
+
+        public List<Modelo> GetModelos()
+        {
+            var consulta = from datos in connection.Table<Modelo>()
                            select datos;
 
             return consulta.ToList();

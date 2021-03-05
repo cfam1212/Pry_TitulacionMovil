@@ -6,7 +6,9 @@
     using System.Windows.Input;
     using Xamarin.Forms;
     using Views;
+    using Models;
     using Services;
+    using System.Collections.Generic;
 
     public class LoginViewModel: BaseViewModel
     {
@@ -21,6 +23,8 @@
         private bool isRemember;
         private bool isRunning;
         private bool isEnabled;
+        private List<Marca> listmarcas;
+        private List<Modelo> listmodelos;
         #endregion
 
         #region Propiedades
@@ -152,6 +156,54 @@
             this.IsEnabled = true;
             this.UserName = string.Empty;
             this.Password = string.Empty;
+
+            var marcas = await this.apiService.GetParametrosGenerales<Marca>(
+                _urlbase,
+                "api",
+                "parametro",
+                "MARCA");
+
+            this.listmarcas = (List<Marca>)marcas.Result;
+
+            if (listmarcas.Count > 0)
+            {
+                foreach (var _item in this.listmarcas)
+                {
+                    var newmarcas = new Marca()
+                    {
+                        Id = _item.Id,
+                        CodigoParametro = _item.CodigoParametro,
+                        NombreParametro = _item.NombreParametro
+                    };
+
+                    this.dataService.Delete(newmarcas);
+                    this.dataService.Insert(newmarcas);
+                }
+            }
+
+            var modelos = await this.apiService.GetParametrosGenerales<Modelo>(
+                _urlbase,
+                "api",
+                "parametro",
+                "MODELO");
+
+            this.listmodelos = (List<Modelo>)modelos.Result;
+
+            if (listmodelos.Count > 0)
+            {
+                foreach (var _item in this.listmodelos)
+                {
+                    var newmodelos = new Modelo()
+                    {
+                        Id = _item.Id,
+                        CodigoParametro = _item.CodigoParametro,
+                        NombreParametro = _item.NombreParametro
+                    };
+
+                    this.dataService.Delete(newmodelos);
+                    this.dataService.Insert(newmodelos);
+                }
+            }
 
             mainViewModel.Orders = new OrdersViewModel();
             //MainViewModel.GetInstance().Orders = new OrdersViewModel();

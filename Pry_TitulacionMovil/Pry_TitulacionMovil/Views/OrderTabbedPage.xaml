@@ -6,6 +6,7 @@
     x:Class="Pry_TitulacionMovil.Views.OrderTabbedPage">
     <TabbedPage.Children>
         <tabs:ClientesPage/>
+        <tabs:EquiposPage/>
     </TabbedPage.Children>
 
 </TabbedPage>
