@@ -12,7 +12,7 @@
             <SearchBar
                 Text="{Binding Filter, Mode=TwoWay}"
                 HeightRequest="46"
-                Placeholder="Buscar Datos"
+                Placeholder="Buscar Orden"
                 SearchCommand="{Binding SearchCommand}">
             </SearchBar>
             <ListView

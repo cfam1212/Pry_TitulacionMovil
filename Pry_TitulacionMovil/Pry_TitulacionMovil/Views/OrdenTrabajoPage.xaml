@@ -1,0 +1,69 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage 
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:input="clr-namespace:Plugin.InputKit.Shared.Controls;assembly=Plugin.InputKit"
+    x:Class="Pry_TitulacionMovil.Views.OrdenTrabajoPage"
+    BindingContext="{Binding Main,Source={StaticResource Locator}}"
+    IconImageSource="ic_ballot">
+    <ContentPage.Content>
+        <ScrollView>
+            <StackLayout
+                Padding="5"
+                BindingContext="{Binding Cliente}">
+                <SearchBar
+                    Text="{Binding Filter, Mode=TwoWay}"
+                    HeightRequest="46"
+                    Placeholder="Buscar Item"
+                    SearchCommand="{Binding SearchCommand}">
+                </SearchBar>
+                <ListView
+                    BackgroundColor="Transparent"
+                    HasUnevenRows="True" 
+                    IsPullToRefreshEnabled="true"
+                    IsRefreshing="{Binding IsRefreshing, Mode=TwoWay}"
+                    ItemsSource="{Binding Trabajo}"
+                    SeparatorVisibility="Default"
+                    SeparatorColor="Navy">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <StackLayout
+                                    Orientation="Horizontal"
+                                    Margin="10,10">
+                                    <input:CheckBox
+                                        HorizontalOptions="FillAndExpand"
+                                        LabelPosition="Before"
+                                        Type="Check"
+                                        Text="{Binding DetalleTrabajo}"
+                                        TextColor="Navy"
+                                        IsChecked="{Binding IsChecked, Mode=TwoWay}"/>
+                                </StackLayout>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+                <StackLayout
+                    HeightRequest="150">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="2*"/>
+                        </Grid.ColumnDefinitions>
+                        <Label
+                            Grid.Column="0"
+                            VerticalOptions="Center"
+                            Text="Observación:"
+                            TextColor="Navy">
+                        </Label>
+                        <Entry
+                            Grid.Column="1"
+                            MaxLength="150"
+                            Text="{Binding Cliente.Observacion}">
+                        </Entry>
+                    </Grid>
+                </StackLayout>
+            </StackLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

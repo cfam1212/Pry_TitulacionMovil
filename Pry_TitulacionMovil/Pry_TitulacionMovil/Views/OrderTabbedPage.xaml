@@ -3,10 +3,13 @@
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:tabs="clr-namespace:Pry_TitulacionMovil.Views"
-    x:Class="Pry_TitulacionMovil.Views.OrderTabbedPage">
+    x:Class="Pry_TitulacionMovil.Views.OrderTabbedPage"
+    Title="Registro Ordenes">
     <TabbedPage.Children>
         <tabs:ClientesPage/>
         <tabs:EquiposPage/>
+        <tabs:OrdenTrabajoPage/>
+        <tabs:OrdenFotoPage/>
     </TabbedPage.Children>
 
 </TabbedPage>

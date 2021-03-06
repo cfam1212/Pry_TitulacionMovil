@@ -1,6 +1,9 @@
 ﻿namespace Pry_TitulacionMovil.ViewModels
 {
     using Models;
+    using System;
+    using System.Collections.ObjectModel;
+
     public class MainViewModel: BaseViewModel
     {
 
@@ -16,14 +19,17 @@
             get { return this.user; }
             set { SetValue(ref this.user, value); }
         }
+        public ObservableCollection<MenuItemViewModel> Menus { get; set; }
         #endregion
+
         #region Constructor
         public MainViewModel()
         {
             instance = this;
-            this.Login = new LoginViewModel();            
-        } 
-        #endregion
+            this.Login = new LoginViewModel();
+            this.CargarMenus();
+        }
+        #endregion        
 
         #region ViewsModels
         public LoginViewModel Login { get; set; }
@@ -41,7 +47,43 @@
             }
 
             return instance;
-        } 
+        }
+        #endregion
+
+        #region Metodos
+        private void CargarMenus()
+        {
+            this.Menus = new ObservableCollection<MenuItemViewModel>();
+
+            this.Menus.Add(new MenuItemViewModel
+            {
+                NombrePagina = "MiPerfil",
+                Icono = "ic_group",
+                Titulo = "Perfil"
+            });
+
+            this.Menus.Add(new MenuItemViewModel
+            {
+                NombrePagina = "OrdenNueva",
+                Icono = "ic_list_alt",
+                Titulo = "Ordenes Nuevas"
+            });
+
+            this.Menus.Add(new MenuItemViewModel
+            {
+                NombrePagina = "OrdenPendiente",
+                Icono = "ic_local_library",
+                Titulo = "Ordenes Pendientes"
+            });
+
+            this.Menus.Add(new MenuItemViewModel
+            {
+                NombrePagina = "Cerrar",
+                Icono = "ic_exit_to_app",
+                Titulo = "Cerrar Sesión"
+            });
+
+        }
         #endregion
     }
 }

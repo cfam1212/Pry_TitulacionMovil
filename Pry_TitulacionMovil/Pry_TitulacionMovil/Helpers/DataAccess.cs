@@ -23,6 +23,7 @@
             connection.CreateTable<Orden>();
             connection.CreateTable<Marca>();
             connection.CreateTable<Modelo>();
+            connection.CreateTable<ListaTrabajo>();
         }
         #endregion
 
@@ -67,11 +68,29 @@
 
             return consulta.ToList();
         }
+
+        public List<ListaTrabajo> GetListaTrabajo()
+        {
+            var consulta = from datos in connection.Table<ListaTrabajo>()
+                           select datos;
+
+            return consulta.ToList();
+        }
+        public UserLocal BuscarUsuario(int iduser)
+        {
+            var consulta = from datos in connection.Table<UserLocal>()
+                           where datos.UserId == iduser
+                           select datos;
+
+            return consulta.FirstOrDefault();
+        }
         #endregion
 
+        #region CloseBase
         public void Dispose()
         {
             connection.Dispose();
-        }
+        } 
+        #endregion
     }
 }

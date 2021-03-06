@@ -1,13 +1,12 @@
 ﻿namespace Pry_TitulacionMovil.ViewModels
 {
+    using Helpers;
     using Models;
     using Services;
-    using System;
-    using System.Linq;
-    using Helpers;
     using System.Collections.Generic;
-    using Xamarin.Forms;
     using System.Collections.ObjectModel;
+    using System.Linq;
+    using Xamarin.Forms;
 
     public class OrdersViewModel: BaseViewModel
     {
@@ -114,6 +113,9 @@
                                 IdEquipo = itemorder.IdEquipo,
                                 OrdenEstado = itemorder.OrdenEstado,
                                 Cliente = itemorder.Cliente,
+                                Direccion = itemorder.Direccion,
+                                Contacto = itemorder.Contacto,
+                                Celular = itemorder.Celular,
                                 FechaInicioOT = itemorder.FechaInicioOT,
                                 FechaFinalOT = itemorder.FechaFinalOT,
                                 TipoTrabajo = itemorder.TipoTrabajo,
@@ -152,6 +154,9 @@
                 IdEquipo = lista.IdEquipo,
                 OrdenEstado = lista.OrdenEstado,
                 Cliente = lista.Cliente,
+                Direccion = lista.Direccion,
+                Contacto = lista.Contacto,
+                Celular = lista.Celular,
                 FechaInicioOT = lista.FechaInicioOT,
                 FechaFinalOT = lista.FechaFinalOT,
                 TipoTrabajo = lista.TipoTrabajo,

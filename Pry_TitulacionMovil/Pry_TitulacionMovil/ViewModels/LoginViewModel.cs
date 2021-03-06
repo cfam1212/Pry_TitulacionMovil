@@ -2,13 +2,12 @@
 {
     using GalaSoft.MvvmLight.Command;
     using Helpers;
-    using System;
-    using System.Windows.Input;
-    using Xamarin.Forms;
-    using Views;
     using Models;
     using Services;
     using System.Collections.Generic;
+    using System.Windows.Input;
+    using Views;
+    using Xamarin.Forms;
 
     public class LoginViewModel: BaseViewModel
     {
@@ -25,6 +24,7 @@
         private bool isEnabled;
         private List<Marca> listmarcas;
         private List<Modelo> listmodelos;
+        private List<ListaTrabajo> listatrabajo;
         #endregion
 
         #region Propiedades
@@ -115,7 +115,6 @@
                 return;
             }
 
-
             var _urlbase = Application.Current.Resources["APIServices"].ToString();
 
             var _login = await this.apiService.GetLogin(
@@ -205,10 +204,33 @@
                 }
             }
 
-            mainViewModel.Orders = new OrdersViewModel();
-            //MainViewModel.GetInstance().Orders = new OrdersViewModel();
+            var lista = await this.apiService.GetListaTrabajo<ListaTrabajo>(
+                _urlbase,
+                "api",
+                "listatrabajo");
 
-            await Application.Current.MainPage.Navigation.PushAsync(new OrdersPage());
+            this.listatrabajo = (List<ListaTrabajo>)lista.Result;
+
+            if (listatrabajo.Count > 0)
+            {
+                foreach (var _item in this.listatrabajo)
+                {
+                    var newlistatrabajo = new ListaTrabajo()
+                    {
+                        Id = _item.Id,
+                        DetalleTrabajo = _item.DetalleTrabajo,
+                        CheckList = false
+                    };
+
+                    this.dataService.Delete(newlistatrabajo);
+                    this.dataService.Insert(newlistatrabajo);
+                }
+            }
+
+            mainViewModel.Orders = new OrdersViewModel();
+            Application.Current.MainPage = new MasterPage();
+            //MainViewModel.GetInstance().Orders = new OrdersViewModel();
+            //await Application.Current.MainPage.Navigation.PushAsync(new OrdersPage());
 
         }
         #endregion

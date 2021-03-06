@@ -20,8 +20,8 @@
         {
 
             MainViewModel.GetInstance().Cliente = new ClientesViewModel(this);
-            //await App.Navigator.PushAsync(new OrderTabbedPage());
-            await Application.Current.MainPage.Navigation.PushAsync(new OrderTabbedPage());
+            await App.Navigator.PushAsync(new OrderTabbedPage());
+            //await Application.Current.MainPage.Navigation.PushAsync(new OrderTabbedPage());
 
         } 
         #endregion

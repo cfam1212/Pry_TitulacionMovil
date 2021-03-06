@@ -8,6 +8,8 @@
     {
         #region Propiedades
         public static NavigationPage Navigator { get; internal set; }
+        public static MasterPage Master { get; internal set; }
+
         #endregion
 
         #region Constructor
@@ -15,19 +17,21 @@
         {
             InitializeComponent();
 
-            //this.MainPage = new LoginPage();
-
             if (Settings.UserLogin == 0)
             {
                 this.MainPage = new NavigationPage(new LoginPage());
             }
             else
             {
+                var dataAcces = new DataAccess();
+                var user = dataAcces.BuscarUsuario(Settings.UserLogin);
                 var mainViewModel = MainViewModel.GetInstance();
+                mainViewModel.userId = user.UserId;
+                mainViewModel.User = user;
                 mainViewModel.Orders = new OrdersViewModel();
-                Application.Current.MainPage = new NavigationPage(new OrdersPage());
+                Application.Current.MainPage = new MasterPage();
             }
-            
+
         }
         #endregion
 

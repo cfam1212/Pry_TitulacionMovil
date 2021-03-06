@@ -1,0 +1,54 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage 
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    BindingContext="{Binding Main,Source={StaticResource Locator}}"
+    x:Class="Pry_TitulacionMovil.Views.OrdenFotoPage"
+    IconImageSource="ic_add_a_photo">
+    <ContentPage.Content>
+        <ScrollView
+            BindingContext="{Binding Cliente}">
+            <StackLayout
+                Padding="5">
+                <Image
+                    Aspect="Fill"
+                    Source="{Binding ImagenFuente}"
+                    HeightRequest="300">
+                    <Image.GestureRecognizers>
+                        <TapGestureRecognizer 
+                            Command="{Binding TomarFotoCommand}">
+                        </TapGestureRecognizer>
+                    </Image.GestureRecognizers>
+                </Image>
+                <StackLayout
+                    Margin="10,5">
+                    <Label 
+                        HorizontalOptions="Center" 
+                        FontSize="12"
+                        Text="Capturar Foto del Equipo" 
+                        TextColor="Navy">
+                    </Label>
+                </StackLayout>
+                <ActivityIndicator
+                    IsRunning="{Binding IsRunning,Mode=TwoWay}"
+                    VerticalOptions="CenterAndExpand">
+                </ActivityIndicator>
+                <StackLayout
+                    Margin="40,0"
+                    Orientation="Horizontal"
+                    VerticalOptions="End">
+                    <Button
+                        BackgroundColor="Navy"
+                        BorderRadius="23"
+                        Command="{Binding GrabarCommand}"
+                        HeightRequest="46"
+                        HorizontalOptions="FillAndExpand"
+                        IsEnabled="{Binding IsEneabled, Mode=TwoWay}"
+                        Text="Guardar Orden"
+                        TextColor="White">
+                    </Button>
+                </StackLayout>
+            </StackLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>
