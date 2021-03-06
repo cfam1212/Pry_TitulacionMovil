@@ -84,6 +84,23 @@
 
             return consulta.FirstOrDefault();
         }
+        public Orden GetOrdenesLocal(int id)
+        {
+            var consulta = from datos in connection.Table<Orden>()
+                           where datos.IdOrden == id
+                           select datos;
+
+            return consulta.FirstOrDefault();
+        }
+        public List<OrdenDetalles> GetOrdenDetalleLocal(int id)
+        {
+            var consulta = from datos in connection.Table<OrdenDetalles>()
+                           where datos.IdOrden == id
+                           select datos;
+
+            return consulta.ToList();
+        }
+
         #endregion
 
         #region CloseBase

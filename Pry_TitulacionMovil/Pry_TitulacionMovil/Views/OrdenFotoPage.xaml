@@ -15,7 +15,7 @@
                     Source="{Binding ImagenFuente}"
                     HeightRequest="300">
                     <Image.GestureRecognizers>
-                        <TapGestureRecognizer 
+                        <TapGestureRecognizer                            
                             Command="{Binding TomarFotoCommand}">
                         </TapGestureRecognizer>
                     </Image.GestureRecognizers>

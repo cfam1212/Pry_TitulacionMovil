@@ -12,6 +12,7 @@
     using GalaSoft.MvvmLight.Command;
     using Xamarin.Forms;
     using Plugin.Media.Abstractions;
+    using Xamarin.Essentials;
 
     public class ClientesViewModel : BaseViewModel
     {
@@ -29,9 +30,14 @@
         private int modeloindex;
         private bool isRefreshing;
         private bool isChecked;
+        private bool isEneabled;
+        private int itemseleccionado;
         private string filter;
         private ImageSource imagenFuente;
         private MediaFile file;
+        private string latitud;
+        private string longitud;
+        private string fechainiciotr;
         #endregion
 
         #region Propiedades
@@ -73,6 +79,11 @@
             get { return isChecked; }
             set { this.SetValue(ref isChecked, value); }
         }
+        public bool IsEneabled
+        {
+            get { return isEneabled; }
+            set { this.SetValue(ref isEneabled, value); }
+        }
         public string Filter
         {
             get { return filter; }
@@ -86,6 +97,16 @@
         {
             get { return this.imagenFuente; }
             set { SetValue(ref this.imagenFuente, value); }
+        }
+        public string Latitud
+        {
+            get { return latitud; }
+            set { this.SetValue(ref latitud, value); }
+        }
+        public string Longitud
+        {
+            get { return longitud; }
+            set { this.SetValue(ref longitud, value); }
         }
         #endregion
 
@@ -101,7 +122,8 @@
             this.MarcaIndex = this.GetMarcaIndex();
             this.ModeloIndex = this.GetModeloIndex();
             this.ImagenFuente = "camara";
-            
+            this.IsEneabled = true;
+            this.fechainiciotr = DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss");
         }
         #endregion
 
@@ -118,6 +140,14 @@
             get
             {
                 return new RelayCommand(this.TomarFoto);
+            }
+        }
+
+        public ICommand GrabarCommand
+        {
+            get
+            {
+                return new RelayCommand(this.Grabar);
             }
         }
         #endregion
@@ -225,6 +255,185 @@
                     return stream;
                 });
             }
+        }
+
+        private async void Grabar()
+        {
+            if (this.file == null)
+            {
+                await Application.Current.MainPage.DisplayAlert(
+                    "Error",
+                    "Tome la Foto",
+                    "Aceptar");
+                return;
+            }
+
+            foreach (var item in this.Trabajo)
+            {
+                if (item.CheckList)
+                {
+                    this.itemseleccionado = 1;
+                    break;
+                }
+                else
+                {
+                    this.itemseleccionado = 0;
+                }
+            }
+
+            if (this.itemseleccionado == 0)
+            {
+                await Application.Current.MainPage.DisplayAlert(
+                    "Mensaje",
+                    "Seleccione un Item de Trabajo",
+                    "Aceptar");
+                return;
+            }
+
+            try
+            {
+                var location = await Geolocation.GetLastKnownLocationAsync();
+                if (location == null)
+                {
+                    location = await Geolocation.GetLocationAsync(new GeolocationRequest
+                    {
+                        DesiredAccuracy = GeolocationAccuracy.Medium,
+                        Timeout = TimeSpan.FromSeconds(30)
+                    });
+                    if (location != null)
+                    {
+                        this.Latitud = location.Latitude.ToString();
+                        this.Longitud = location.Longitude.ToString();
+                    }
+                }
+                else
+                {
+                    this.Latitud = location.Latitude.ToString();
+                    this.Longitud = location.Longitude.ToString();
+                }
+            }
+            catch (FeatureNotSupportedException fnsEx)
+            {
+                this.Latitud = string.Empty;
+                this.Longitud = string.Empty;
+            }
+            catch (FeatureNotEnabledException fneEx)
+            {
+                this.Latitud = string.Empty;
+                this.Longitud = string.Empty;
+            }
+            catch (PermissionException pEx)
+            {
+                this.Latitud = string.Empty;
+                this.Longitud = string.Empty;
+            }
+            catch (Exception ex)
+            {
+                await Application.Current.MainPage.DisplayAlert(
+                    "Error",
+                    ex.ToString(),
+                    "Aceptar");
+            }
+
+            var codigomarca = this.listamarcas.ElementAt(this.MarcaIndex).CodigoParametro;
+            var codigomodelo = this.listamodelos.ElementAt(this.ModeloIndex).CodigoParametro;
+
+            var ordernew = new Orden()
+            {
+                IdOrden = Cliente.IdOrden,
+                IdEquipo = Cliente.IdEquipo,
+                OrdenEstado = "PRO",
+                Cliente = Cliente.Cliente,
+                Direccion = Cliente.Direccion,
+                Contacto = Cliente.Contacto,
+                Celular = Cliente.Celular,
+                FechaInicioOT = Cliente.FechaInicioOT,
+                FechaFinalOT = Cliente.FechaFinalOT,
+                TipoTrabajo = Cliente.TipoTrabajo,
+                ProblemaEquipo = Cliente.ProblemaEquipo,
+                Notas = Cliente.Notas,
+                Equipo = Cliente.Equipo,
+                MarcaId = codigomarca,
+                ModeloId = codigomodelo,
+                Voltaje = Cliente.Voltaje,
+                Amperaje = Cliente.Amperaje,
+                Presion = Cliente.Presion,
+                FechaInicioTR = fechainiciotr,
+                FechaFinalTR = DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss"),
+                Observacion = Cliente.Observacion,
+                ImagenTR = FilesHelper.ReadFully(this.file.GetStream()),
+                RutaImagen = Cliente.RutaImagen,
+                Latitud = Cliente.Latitud,
+                Logintud = Cliente.Logintud,
+            };
+
+            this.dataService.Update(ordernew);
+
+            foreach (var item in this.listatrabajos)
+            {
+                if (item.CheckList)
+                {
+                    var neworderdet = new OrdenDetalles
+                    {
+                        IdOrden = Cliente.IdOrden,
+                        IdListaTrabajo = item.Id
+                    };
+                    this.dataService.Insert(neworderdet);
+                }
+            }
+
+            var orderupdate = this.dataAccess.GetOrdenesLocal(Cliente.IdOrden);
+            var orderdetail = this.dataAccess.GetOrdenDetalleLocal(Cliente.IdOrden);
+
+            IsRunning = true;
+            IsEnable = false;
+
+            var connection = await this.apiService.CheckConnection();
+
+            if (!connection.IsSuccess)
+            {
+                IsRunning = false;
+                IsEnable = true;
+
+                await Application.Current.MainPage.DisplayAlert(
+                    Languages.Error,
+                    Languages.ConfirmValidation3,
+                    Languages.Accept);
+            }
+            else
+            {
+                var apiService = Application.Current.Resources["APIServices"].ToString();
+                var orderapi = Converter.ToOrderApi(orderupdate, orderdetail);
+
+                var response = await this.apiService.Post(
+                    apiService,
+                    "/api",
+                    "/orderdetail",
+                    orderapi);
+
+                if (response.IsSuccess)
+                {
+                    this.dataService.Delete(orderupdate);
+                    foreach (var itemorder in orderdetail)
+                    {
+                        this.dataService.Delete(itemorder);
+                    }
+                }
+                else
+                {
+                    await Application.Current.MainPage.DisplayAlert(
+                        response.Message,
+                        Languages.ConfirmValidation3,
+                        Languages.Accept);
+                }
+            }
+
+            IsRunning = false;
+            IsEnable = true;
+
+            var mainViewModel = MainViewModel.GetInstance();
+            mainViewModel.Orders = new OrdersViewModel();
+            Application.Current.MainPage = new MasterPage();
         }
         #endregion
 
