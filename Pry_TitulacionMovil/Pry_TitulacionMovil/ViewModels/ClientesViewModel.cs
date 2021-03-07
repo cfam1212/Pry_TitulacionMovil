@@ -17,9 +17,9 @@
 
     public class ClientesViewModel : BaseViewModel
     {
-        #region Atributos
-        private ApiService apiService;
+        #region Atributos       
         public Orden Cliente { get; set; }
+        private ApiService apiService;
         private List<Marca> listamarcas;
         private List<Modelo> listamodelos;
         private List<ListaTrabajo> listatrabajos;
@@ -395,7 +395,7 @@
             var ordendetalle = this.dataAccess.GetOrdenDetalleLocal(Cliente.IdOrden);
 
             IsRunning = true;
-            isEnabled = false;
+            IsEnabled = false;
 
             var connection = await this.apiService.CheckConnection();
 
