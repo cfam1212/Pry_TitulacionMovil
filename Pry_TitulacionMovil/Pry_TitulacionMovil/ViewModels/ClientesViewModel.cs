@@ -13,10 +13,12 @@
     using Xamarin.Forms;
     using Plugin.Media.Abstractions;
     using Xamarin.Essentials;
+    using Views;
 
     public class ClientesViewModel : BaseViewModel
     {
         #region Atributos
+        private ApiService apiService;
         public Orden Cliente { get; set; }
         private List<Marca> listamarcas;
         private List<Modelo> listamodelos;
@@ -30,7 +32,8 @@
         private int modeloindex;
         private bool isRefreshing;
         private bool isChecked;
-        private bool isEneabled;
+        private bool isEnabled;
+        private bool isRunning;
         private int itemseleccionado;
         private string filter;
         private ImageSource imagenFuente;
@@ -74,15 +77,20 @@
             get { return isRefreshing; }
             set { this.SetValue(ref isRefreshing, value); }
         }
-        public bool IsChecked
+        public bool Check
         {
             get { return isChecked; }
             set { this.SetValue(ref isChecked, value); }
         }
-        public bool IsEneabled
+        public bool IsEnabled
         {
-            get { return isEneabled; }
-            set { this.SetValue(ref isEneabled, value); }
+            get { return isEnabled; }
+            set { this.SetValue(ref isEnabled, value); }
+        }
+        public bool IsRunning
+        {
+            get { return isRunning; }
+            set { this.SetValue(ref isRunning, value); }
         }
         public string Filter
         {
@@ -113,6 +121,7 @@
         #region Constructor
         public ClientesViewModel(Orden cliente)
         {
+            this.apiService = new ApiService();
             this.dataService = new DataService();
             this.dataAccess = new DataAccess();
             this.Cliente = cliente;
@@ -122,7 +131,7 @@
             this.MarcaIndex = this.GetMarcaIndex();
             this.ModeloIndex = this.GetModeloIndex();
             this.ImagenFuente = "camara";
-            this.IsEneabled = true;
+            this.IsEnabled = true;
             this.fechainiciotr = DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss");
         }
         #endregion
@@ -268,9 +277,9 @@
                 return;
             }
 
-            foreach (var item in this.Trabajo)
+            foreach (var item in this.trabajo)
             {
-                if (item.CheckList)
+                if (item.Check)
                 {
                     this.itemseleccionado = 1;
                     break;
@@ -371,50 +380,50 @@
 
             foreach (var item in this.listatrabajos)
             {
-                if (item.CheckList)
+                if (item.Check)
                 {
                     var neworderdet = new OrdenDetalles
                     {
-                        IdOrden = Cliente.IdOrden,
-                        IdListaTrabajo = item.Id
+                        id_orden = Cliente.IdOrden,
+                        id_listatrabajo = item.Id
                     };
                     this.dataService.Insert(neworderdet);
                 }
             }
 
-            var orderupdate = this.dataAccess.GetOrdenesLocal(Cliente.IdOrden);
-            var orderdetail = this.dataAccess.GetOrdenDetalleLocal(Cliente.IdOrden);
+            var ordencabecera = this.dataAccess.GetOrdenesLocal(Cliente.IdOrden);
+            var ordendetalle = this.dataAccess.GetOrdenDetalleLocal(Cliente.IdOrden);
 
             IsRunning = true;
-            IsEnable = false;
+            isEnabled = false;
 
             var connection = await this.apiService.CheckConnection();
 
             if (!connection.IsSuccess)
             {
                 IsRunning = false;
-                IsEnable = true;
+                isEnabled = true;
 
                 await Application.Current.MainPage.DisplayAlert(
-                    Languages.Error,
-                    Languages.ConfirmValidation3,
-                    Languages.Accept);
+                    "Mensaje",
+                    "Los Datos se guardaron localmente",
+                    "Aceptar");
             }
             else
             {
                 var apiService = Application.Current.Resources["APIServices"].ToString();
-                var orderapi = Converter.ToOrderApi(orderupdate, orderdetail);
+                var ordencabedeta = Converter.ToOrdenCabeDeta(ordencabecera, ordendetalle);
 
-                var response = await this.apiService.Post(
+                var response = await this.apiService.GrabarOrden(
                     apiService,
-                    "/api",
-                    "/orderdetail",
-                    orderapi);
+                    "api",
+                    "ordencabedeta",
+                    ordencabedeta);
 
                 if (response.IsSuccess)
                 {
-                    this.dataService.Delete(orderupdate);
-                    foreach (var itemorder in orderdetail)
+                    this.dataService.Delete(ordencabecera);
+                    foreach (var itemorder in ordendetalle)
                     {
                         this.dataService.Delete(itemorder);
                     }
@@ -423,13 +432,13 @@
                 {
                     await Application.Current.MainPage.DisplayAlert(
                         response.Message,
-                        Languages.ConfirmValidation3,
-                        Languages.Accept);
+                        "No se pudo grabar, grabado localmente",
+                        "Aceptar");
                 }
             }
 
             IsRunning = false;
-            IsEnable = true;
+            IsEnabled = true;
 
             var mainViewModel = MainViewModel.GetInstance();
             mainViewModel.Orders = new OrdersViewModel();

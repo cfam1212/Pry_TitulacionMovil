@@ -219,7 +219,7 @@
                     {
                         Id = _item.Id,
                         DetalleTrabajo = _item.DetalleTrabajo,
-                        CheckList = false
+                        Check = false
                     };
 
                     this.dataService.Delete(newlistatrabajo);

@@ -37,7 +37,7 @@
                                         Type="Check"
                                         Text="{Binding DetalleTrabajo}"
                                         TextColor="Navy"
-                                        IsChecked="{Binding IsChecked, Mode=TwoWay}"/>
+                                        IsChecked="{Binding Check, Mode=TwoWay}"/>
                                 </StackLayout>
                             </ViewCell>
                         </DataTemplate>

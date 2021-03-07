@@ -6,7 +6,7 @@
         [AutoIncrement]
         [PrimaryKey]
         public int IdOrdeDetalle { get; set; }
-        public int IdOrden { get; set; }
-        public int IdListaTrabajo { get; set; }
+        public int id_orden { get; set; }
+        public int id_listatrabajo { get; set; }
     }
 }

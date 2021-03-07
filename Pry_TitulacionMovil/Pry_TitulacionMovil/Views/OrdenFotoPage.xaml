@@ -43,7 +43,7 @@
                         Command="{Binding GrabarCommand}"
                         HeightRequest="46"
                         HorizontalOptions="FillAndExpand"
-                        IsEnabled="{Binding IsEneabled, Mode=TwoWay}"
+                        IsEnabled="{Binding IsEnabled, Mode=TwoWay}"
                         Text="Guardar Orden"
                         TextColor="White">
                     </Button>

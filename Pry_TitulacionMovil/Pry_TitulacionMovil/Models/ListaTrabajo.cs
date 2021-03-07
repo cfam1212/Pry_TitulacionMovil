@@ -6,6 +6,6 @@
         [PrimaryKey]
         public int Id { get; set; }
         public string DetalleTrabajo { get; set; }
-        public bool CheckList { get; set; }
+        public bool Check { get; set; }
     }
 }

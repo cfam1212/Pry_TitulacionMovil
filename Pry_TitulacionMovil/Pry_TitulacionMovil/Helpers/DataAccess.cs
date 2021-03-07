@@ -24,6 +24,7 @@
             connection.CreateTable<Marca>();
             connection.CreateTable<Modelo>();
             connection.CreateTable<ListaTrabajo>();
+            connection.CreateTable<OrdenDetalles>();
         }
         #endregion
 
@@ -95,7 +96,7 @@
         public List<OrdenDetalles> GetOrdenDetalleLocal(int id)
         {
             var consulta = from datos in connection.Table<OrdenDetalles>()
-                           where datos.IdOrden == id
+                           where datos.id_orden == id
                            select datos;
 
             return consulta.ToList();
