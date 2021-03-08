@@ -169,8 +169,6 @@
 
         private int GetMarcaIndex()
         {
-            //var index = this.listamarcas.FindIndex(m => m.CodigoParametro == Cliente.MarcaId);
-            //return index;
             return this.listamarcas.FindIndex(m => m.CodigoParametro == Cliente.MarcaId);
         }
 
@@ -243,18 +241,6 @@
             {
                 this.file = await CrossMedia.Current.PickPhotoAsync();
             }
-
-            //if (CrossMedia.Current.IsCameraAvailable)
-            //{
-            //    this.file = await CrossMedia.Current.TakePhotoAsync(
-            //        new StoreCameraMediaOptions
-            //        {
-            //            Directory = "Sample",
-            //            Name = "test.jpg",
-            //            PhotoSize = PhotoSize.Small,
-            //        }
-            //    );
-            //}
 
             if (this.file != null)
             {
@@ -372,8 +358,8 @@
                 Observacion = Cliente.Observacion,
                 ImagenTR = FilesHelper.ReadFully(this.file.GetStream()),
                 RutaImagen = Cliente.RutaImagen,
-                Latitud = Cliente.Latitud,
-                Logintud = Cliente.Logintud,
+                Latitud = this.Latitud,
+                Logintud = this.Longitud
             };
 
             this.dataService.Update(ordernew);
@@ -406,8 +392,8 @@
 
                 await Application.Current.MainPage.DisplayAlert(
                     "Mensaje",
-                    "Los Datos se guardaron localmente",
-                    "Aceptar");
+                    "Sin Conexión, Grabada Localmente",
+                    "OK");
             }
             else
             {
@@ -432,8 +418,8 @@
                 {
                     await Application.Current.MainPage.DisplayAlert(
                         response.Message,
-                        "No se pudo grabar, grabado localmente",
-                        "Aceptar");
+                        "Problema en el Servicio, Grabada Localmente",
+                        "OK");
                 }
             }
 

@@ -101,6 +101,17 @@
 
             return consulta.ToList();
         }
+        public List<OrdenPendiente> GetOrdersPendientes()
+        {
+            var consulta = from datos in connection.Table<Orden>()
+                           where datos.OrdenEstado == "PRO"
+                           select new OrdenPendiente
+                           {
+                               IdOrden = datos.IdOrden
+                           };
+
+            return consulta.ToList();
+        }
 
         #endregion
 

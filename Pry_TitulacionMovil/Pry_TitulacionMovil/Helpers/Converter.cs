@@ -5,6 +5,7 @@
 
     public static class Converter
     {
+        #region Metodos
         public static UserLocal ToUserLocal(User _user)
         {
             return new UserLocal
@@ -38,5 +39,17 @@
                 OrdenDetalles = ordendetalle
             };
         }
+        public static object ToUserApi(UserLocal user, byte[] imageArray)
+        {
+            return new UserApi
+            {
+                UserId = user.UserId,
+                UserName = user.UserName,
+                UserLastName = user.UserLastName,
+                Password = user.Password,
+                ImagenUser = imageArray
+            };
+        }
+        #endregion
     }
 }

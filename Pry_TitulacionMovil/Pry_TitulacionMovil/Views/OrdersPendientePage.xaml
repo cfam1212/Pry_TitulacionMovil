@@ -1,0 +1,113 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage 
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    BindingContext="{Binding Main, Source={StaticResource Locator}}"
+    x:Class="Pry_TitulacionMovil.Views.OrdersPendientePage"
+    Title="Ordenes Pendientes">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem 
+            IconImageSource="ic_cloud_upload"
+            Text="Sincronizar"            
+            Command="{Binding SincronizarCommand}">
+        </ToolbarItem>
+    </ContentPage.ToolbarItems>    
+    <ContentPage.Content>
+        <StackLayout
+            Padding="5"
+            BindingContext="{Binding OrdersPendientes}">
+            <SearchBar
+                Text="{Binding Filter, Mode=TwoWay}"
+                HeightRequest="46"
+                Placeholder="Buscar Orden"
+                SearchCommand="{Binding SearchCommand}">
+            </SearchBar>
+            <ListView
+                    BackgroundColor="Transparent"
+                    HasUnevenRows="true" 
+                    IsPullToRefreshEnabled="true"
+                    IsRefreshing="{Binding IsRefreshing}"
+                    ItemsSource="{Binding PendienteOrders}"
+                    SeparatorVisibility="Default"
+                    SeparatorColor="Navy"
+                    RefreshCommand="{Binding RefreshCommand}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Frame
+                                CornerRadius="20"
+                                HasShadow="True"
+                                Margin="5">
+                                <Frame.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding SelectOrderCommand}"/>
+                                </Frame.GestureRecognizers>
+                                <StackLayout
+                                    Margin="0,3">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="2*"/>
+                                            <ColumnDefinition Width="3*"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Label
+                                            Grid.Row="0"
+                                            Grid.Column="0"
+                                            Text="No. Orden: "
+                                            FontSize="14"
+                                            TextColor="Navy">
+                                        </Label>
+                                        <Label
+                                            Grid.Row="0"
+                                            Grid.Column="1"
+                                            Text="{Binding IdOrden}">
+                                        </Label>
+                                        <Label
+                                            Grid.Row="1"
+                                            Grid.Column="0"
+                                            Text="Cliente:"
+                                            TextColor="Navy">
+                                        </Label>
+                                        <Label
+                                            Grid.Row="1"
+                                            Grid.Column="1"
+                                            Text="{Binding Cliente}">
+                                        </Label>
+                                        <Label
+                                            Grid.Row="2"
+                                            Grid.Column="0"
+                                            Text="Fecha Inicio:"
+                                            TextColor="Navy">
+                                        </Label>
+                                        <Label
+                                            Grid.Row="2"
+                                            Grid.Column="1"
+                                            Text="{Binding FechaInicioOT}">
+                                        </Label>
+                                        <Label
+                                            Grid.Row="3"
+                                            Grid.Column="0"
+                                            Text="Fecha Fin:"
+                                            TextColor="Navy">
+                                        </Label>
+                                        <Label
+                                            Grid.Row="3"
+                                            Grid.Column="1"
+                                            Text="{Binding FechaFinalOT}">
+                                        </Label>
+                                        <Image 
+                                            Grid.Row="1"
+                                            Grid.Column="2"
+                                            VerticalOptions="Center"
+                                            HorizontalOptions="End" 
+                                            Source="ic_chevron_right">
+                                        </Image>
+                                    </Grid>
+                                </StackLayout>
+                            </Frame>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

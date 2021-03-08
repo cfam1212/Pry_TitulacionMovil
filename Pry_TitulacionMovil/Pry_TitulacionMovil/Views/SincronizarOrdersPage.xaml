@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage 
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    BindingContext="{Binding Main,Source={StaticResource Locator}}"
+    x:Class="Pry_TitulacionMovil.Views.SincronizarOrdersPage"
+    Title="Sincronizar Ordenes">
+    <ContentPage.Content>
+        <StackLayout
+            BindingContext="{Binding Sincronizar}"
+            Padding="5">
+            <Grid
+                Margin="10,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <Label
+                    Grid.Column="1"
+                    Grid.Row="3"
+                    Text="Sincronizando Datos..."
+                    VerticalOptions="CenterAndExpand"
+                    HorizontalOptions="CenterAndExpand">
+                </Label>
+                <ProgressBar
+                    Grid.Column="1"
+                    Grid.Row="4"
+                    Progress="{Binding ProgressBar, Mode=TwoWay}"
+                    WidthRequest="150"
+                    HorizontalOptions="CenterAndExpand"
+                    VerticalOptions="CenterAndExpand">
+                </ProgressBar>
+                <ActivityIndicator
+                    IsRunning="{Binding IsRunning,Mode=TwoWay}"
+                    VerticalOptions="CenterAndExpand">
+                </ActivityIndicator>
+            </Grid>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

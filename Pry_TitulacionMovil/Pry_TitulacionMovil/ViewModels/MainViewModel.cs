@@ -1,8 +1,11 @@
 ﻿namespace Pry_TitulacionMovil.ViewModels
 {
+    using GalaSoft.MvvmLight.Command;
     using Models;
     using System;
     using System.Collections.ObjectModel;
+    using System.Windows.Input;
+    using Views;
 
     public class MainViewModel: BaseViewModel
     {
@@ -35,6 +38,11 @@
         public LoginViewModel Login { get; set; }
         public OrdersViewModel Orders { get; set; }
         public ClientesViewModel Cliente { get; set; }
+        public OrdersPendienteViewModel OrdersPendientes { get; set; }
+        public SincronizarViewModel Sincronizar { get; set; }
+        public MyPerfilViewModel MyPerfil { get; set; }
+        public CambiarPassWordViewModel CambiarPassword { get; set; }
+
         #endregion
 
         #region Singleton
@@ -48,6 +56,16 @@
 
             return instance;
         }
+        #endregion
+
+        #region Comandos
+        public ICommand SincronizarCommand
+        {
+            get
+            {
+                return new RelayCommand(Upload);
+            }
+        } 
         #endregion
 
         #region Metodos
@@ -82,7 +100,11 @@
                 Icono = "ic_exit_to_app",
                 Titulo = "Cerrar Sesión"
             });
-
+        }
+        private async void Upload()
+        {
+            this.Sincronizar = new SincronizarViewModel();
+            await App.Navigator.PushAsync(new SincronizarOrdersPage());
         }
         #endregion
     }

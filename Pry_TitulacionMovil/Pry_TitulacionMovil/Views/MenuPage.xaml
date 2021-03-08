@@ -31,7 +31,7 @@
                         <ViewCell>
                             <Grid>
                                 <Grid.GestureRecognizers>
-                                    <TapGestureRecognizer Command="{Binding NavigateCommand}"/>
+                                    <TapGestureRecognizer Command="{Binding MenuCommand}"/>
                                 </Grid.GestureRecognizers>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto"></ColumnDefinition>

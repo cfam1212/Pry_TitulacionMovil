@@ -258,52 +258,89 @@
             }
         }
 
-        //public async Task<Response> Put<T>(
-        //    string urlBase,
-        //    string servicePrefix,
-        //    string controller,
-        //    T model)
-        //{
-        //    try
-        //    {
-        //        var request = JsonConvert.SerializeObject(model);
-        //        var content = new StringContent(
-        //            request,
-        //            Encoding.UTF8, "application/json");
-        //        var client = new HttpClient();
-        //        client.BaseAddress = new Uri(urlBase);
-        //        var url = string.Format(
-        //            "{0}{1}/{2}",
-        //            servicePrefix,
-        //            controller,
-        //            model.GetHashCode());
-        //        var response = await client.PutAsync(url, content);
-        //        var result = await response.Content.ReadAsStringAsync();
+        public async Task<Response> UpdateUser<T>(
+            string urlBase,
+            string api,
+            string controller,
+            T model)
+        {
+            try
+            {
+                var request = JsonConvert.SerializeObject(model);
+                var content = new StringContent(
+                    request,
+                    Encoding.UTF8, "application/json");
+                var client = new HttpClient();
+                client.BaseAddress = new Uri(urlBase);
+                var url = string.Format(
+                    "{0}/{1}/{2}",
+                    api,
+                    controller,
+                    model.GetHashCode());
 
-        //        if (!response.IsSuccessStatusCode)
-        //        {
-        //            var error = JsonConvert.DeserializeObject<Response>(result);
-        //            error.IsSuccess = false;
-        //            return error;
-        //        }
+                var response = await client.PutAsync(url, content);
+                var result = await response.Content.ReadAsStringAsync();
 
-        //        var newRecord = JsonConvert.DeserializeObject<T>(result);
+                if (!response.IsSuccessStatusCode)
+                {
+                    var error = JsonConvert.DeserializeObject<Response>(result);
+                    error.IsSuccess = false;
+                    return error;
+                }
 
-        //        return new Response
-        //        {
-        //            IsSuccess = true,
-        //            Result = newRecord,
-        //        };
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return new Response
-        //        {
-        //            IsSuccess = false,
-        //            Message = ex.Message,
-        //        };
-        //    }
-        //}
+                var newRecord = JsonConvert.DeserializeObject<T>(result);
+
+                return new Response
+                {
+                    IsSuccess = true,
+                    Result = newRecord,
+                };
+            }
+            catch (Exception ex)
+            {
+                return new Response
+                {
+                    IsSuccess = false,
+                    Message = ex.Message,
+                };
+            }
+        }
+        public async Task<User> GetUser(
+            string urlBase,
+            string api,
+            string controller,
+            int userid)
+        {
+            try
+            {
+                var model = new UserModel
+                {
+                    UserId = userid
+                };
+
+                var request = JsonConvert.SerializeObject(model);
+                var content = new StringContent(
+                    request,
+                    Encoding.UTF8,
+                    "application/json");
+                var client = new HttpClient();
+                client.BaseAddress = new Uri(urlBase);
+                var url = string.Format("{0}/{1}", api, controller);
+                var response = await client.PostAsync(url, content);
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    return null;
+                }
+
+                var result = await response.Content.ReadAsStringAsync();
+                return JsonConvert.DeserializeObject<User>(result);
+            }
+            catch
+            {
+                return null;
+            }
+        }
 
         //public async Task<Response> ChangePassword(
         //    string urlBase,
@@ -344,42 +381,7 @@
         //    }
         //}
 
-        //public async Task<User> GetUser(
-        //    string urlBase,
-        //    string servicePrefix,
-        //    string controller,
-        //    string login)
-        //{
-        //    try
-        //    {
-        //        var model = new UserRequest
-        //        {
-        //            Login = login
-        //        };
 
-        //        var request = JsonConvert.SerializeObject(model);
-        //        var content = new StringContent(
-        //            request,
-        //            Encoding.UTF8,
-        //            "application/json");
-        //        var client = new HttpClient();
-        //        client.BaseAddress = new Uri(urlBase);
-        //        var url = string.Format("{0}{1}", servicePrefix, controller);
-        //        var response = await client.PostAsync(url, content);
-
-        //        if (!response.IsSuccessStatusCode)
-        //        {
-        //            return null;
-        //        }
-
-        //        var result = await response.Content.ReadAsStringAsync();
-        //        return JsonConvert.DeserializeObject<User>(result);
-        //    }
-        //    catch
-        //    {
-        //        return null;
-        //    }
-        //}
         #endregion
     }
 }
