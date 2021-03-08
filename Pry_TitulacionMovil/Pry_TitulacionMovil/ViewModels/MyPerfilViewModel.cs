@@ -61,6 +61,7 @@
         }
         #endregion
 
+        #region Constructor
         public MyPerfilViewModel()
         {
             this.apiService = new ApiService();
@@ -75,9 +76,10 @@
             //    this.IsEnabledImage = false;
             //    this.IsVisible = false;
             //}
-        }
+        } 
+        #endregion
 
-        #region Commando
+        #region Commandos
         public ICommand CambiarImagenCommand
         {
             get
@@ -103,6 +105,8 @@
         }
 
         #endregion
+
+        #region Metodos
         private async void CambiarImagen()
         {
             await CrossMedia.Current.Initialize();
@@ -238,7 +242,8 @@
             this.IsEnabled = true;
 
             await App.Navigator.PopAsync();
-        }
+        } 
+        #endregion
 
     }
 }
