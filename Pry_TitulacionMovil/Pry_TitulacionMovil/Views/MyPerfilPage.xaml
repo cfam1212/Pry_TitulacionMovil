@@ -66,15 +66,12 @@
                         </Entry>
                     </Grid>
                     <StackLayout
-                        Margin="40,10"
-                        Orientation="Vertical"
-                        VerticalOptions="End">
+                        Margin="40,10">
                         <Button
                             BackgroundColor="Navy"
                             BorderRadius="23"
                             Command="{Binding GrabarCommand}"
                             HeightRequest="46"
-                            HorizontalOptions="FillAndExpand"
                             IsEnabled="{Binding IsEnabled, Mode=TwoWay}"
                             Text="Grabar"
                             TextColor="White">
@@ -84,7 +81,6 @@
                             BorderRadius="23"
                             Command="{Binding CambiarPasswordCommand}"
                             HeightRequest="46"
-                            HorizontalOptions="FillAndExpand"
                             Margin="20"
                             IsEnabled="{Binding IsEnabled, Mode=TwoWay}"
                             Text="Cambiar Password"

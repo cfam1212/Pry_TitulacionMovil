@@ -185,4 +185,7 @@
   <ItemGroup>
     <BundleResource Include="Resources\ic_cloud_upload.png" />
   </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\ic_icono.png" />
+  </ItemGroup>
 </Project>

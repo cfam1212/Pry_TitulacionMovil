@@ -68,7 +68,7 @@
                     IsRunning="{Binding IsRunning, Mode=TwoWay}">
                 </ActivityIndicator>
                 <StackLayout
-                Margin="40,0">
+                    Margin="40,0">
                     <Button                
                         BackgroundColor="Green"
                         CornerRadius="23"
