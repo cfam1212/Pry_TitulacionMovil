@@ -39,8 +39,7 @@
 
             return new Response
             {
-                IsSuccess = true,
-                Message = "Conexión Exitosa"
+                IsSuccess = true
             };
         }
         #endregion
@@ -71,10 +70,10 @@
             }
             catch (Exception ex)
             {
-                await Application.Current.MainPage.DisplayAlert(
-                    "Error de Login",
-                    ex.ToString(),
-                    "Aceptar");
+                //await Application.Current.MainPage.DisplayAlert(
+                //    "Error de Login",
+                //    ex.ToString(),
+                //    "Aceptar");
                 return null;
             }
         }

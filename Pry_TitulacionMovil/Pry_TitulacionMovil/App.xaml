@@ -16,7 +16,7 @@
             <!--<x:String x:Key="APIServices">http://test.prestasalud.com</x:String>-->
 
             <!--PARA WEB API EN EL IIS DEL EQUIPO-->
-            <!--<x:String x:Key="APIServices">http://192.168.100.11/Ws_WorkOrders/</x:String>-->
+            <!--<x:String x:Key="APIServices">http://192.168.100.11/ApiMovil/</x:String>-->
 
             <!--PARA WEB API EN EN DEBUG - DESARROLLO-->
             <x:String x:Key="APIServices">http://localhost:44323/</x:String>

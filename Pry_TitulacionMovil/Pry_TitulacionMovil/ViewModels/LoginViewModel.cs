@@ -124,6 +124,19 @@
                 this.UserName,
                 this.Password);
 
+            if (_login == null)
+            {
+                await Application.Current.MainPage.DisplayAlert(
+                    "Error",
+                    "Problema de Cónexión",
+                    "Aceptar");
+
+                this.IsRunning = false;
+                this.IsEnabled = true;
+                this.Password = string.Empty;
+                return;
+            }
+
             if (_login.UserId == 0)
             {
                 await Application.Current.MainPage.DisplayAlert(
@@ -134,7 +147,6 @@
                 this.IsRunning = false;
                 this.IsEnabled = true;
                 this.Password = string.Empty;
-
                 return;
             }
 
